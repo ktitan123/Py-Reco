@@ -5,7 +5,7 @@ import math
 
 
 class ANN():
-    def __init__(self,inodes,onodes,weights,lr,epsilon):
+    def __init__(self,inodes,onodes,weights,lr,epsilon,threshold,maxiter):
         self.layers=1
         self.inodes=inodes
         self.onodes=onodes
@@ -17,7 +17,8 @@ class ANN():
         self.lr=lr
         self.examples=0
         self.epsilon=epsilon
-        self.threshold=0.5
+        self.threshold=threshold
+        self.maxiter=maxiter
         
     def addinput(self,input):
         self.input.append(input)
@@ -32,7 +33,7 @@ class ANN():
             sum=0.0
             for x in range(self.inodes):
                 sum=sum+input[x]*self.weights[index][x]
-            if sum>self.threshold:
+            if sum>=self.threshold:
                 sum=1
             else:
                 sum=0
@@ -52,8 +53,10 @@ class ANN():
     def learn(self):
         err=100000.000
         result=[]
-        while err>self.epsilon:
+        iter=0
+        while err>self.epsilon and iter<self.maxiter:
             err=0.000
+            iter=iter+1
             for index in range(self.examples):
                 result=self.forward_prop(self.input[index])
                 eps=self.backward_prop(result,self.input[index],self.desired[index])
@@ -62,14 +65,14 @@ class ANN():
                 
         
         
-nn=ANN(2,1,[[1,1]],0.1,0.1)  
+nn=ANN(2,1,[[1,0]],0.1,0.1,0,100)  
 nn.addinput([0,0])
 nn.addinput([0,1])
 nn.addinput([1,0])
 nn.addinput([1,1])
 nn.addoutput([0])
-nn.addoutput([0])
-nn.addoutput([0])
+nn.addoutput([1])
+nn.addoutput([1])
 nn.addoutput([1])
 nn.learn()
 print nn.weights     
