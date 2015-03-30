@@ -33,17 +33,14 @@ class ANN():
             sum=0.0
             for x in range(self.inodes):
                 sum=sum+input[x]*self.weights[index][x]
-            if sum>=self.threshold:
-                sum=1
-            else:
-                sum=0
+            
             result.append(sum)
         return result
     
     def backward_prop(self,result,input,desired):
         eps=0.000000
         for x in range(self.onodes):
-            eps=eps+(desired[x]-result[x])**2
+            eps=eps+math.sqrt((desired[x]-result[x])**2)
             for index in range(self.inodes):
                 error=self.lr*(desired[x]-result[x])*input[index]
                 self.weights[x][index]=self.weights[x][index]+error
@@ -55,28 +52,48 @@ class ANN():
         result=[]
         iter=0
         while err>self.epsilon and iter<self.maxiter:
+            #if iter%20==0:
+            #   print str(err)+","
             err=0.000
             iter=iter+1
             for index in range(self.examples):
                 result=self.forward_prop(self.input[index])
                 eps=self.backward_prop(result,self.input[index],self.desired[index])
+                #print result," ",self.weights
                 err=err+eps
         
+     
+         
                 
         
-        
-nn=ANN(2,1,[[1,0]],0.1,0.1,0,100)  
-nn.addinput([0,0])
-nn.addinput([0,1])
-nn.addinput([1,0])
-nn.addinput([1,1])
-nn.addoutput([0])
-nn.addoutput([1])
-nn.addoutput([1])
-nn.addoutput([1])
-nn.learn()
-print nn.weights     
-                
+#items.append(Item('Inception',['thriller','medium','eng']))
+#items.append(Item('Frozen',['children','short','eng']))
+#items.append(Item('3 idiots',['comedy','long','hindi']))
+#items.append(Item('Omen',['horror','medium','eng']))
+#items.append(Item('The Wedding bride',['romance','short','eng']))   
+
+def runNeuralNetwork(train_input,train_output,inodes,onodes,weights,lr,eps,threshold,maxiter):
+    nn=ANN(inodes,onodes,weights,lr,eps,threshold,maxiter)  
+    #nn.addinput([2,4,4,5])
+    #nn.addinput([2,1,0,2])
+    #nn.addinput([3,4,5,2])
+    #nn.addinput([2,1,4,3])
+    #nn.addinput([2,1,2,2])
+    #nn.addoutput([4.5])
+    #nn.addoutput([1.5])
+    #nn.addoutput([3.5])
+    #nn.addoutput([3])
+    #nn.addoutput([2.5])
+    for inp in train_input:
+        nn.addinput(inp)
+    for op in train_output:
+        nn.addoutput(op)
+    nn.learn()
+    print nn.weights 
+    return nn.forward_prop([2,1,2,2])
+   
+#print runNeuralNetwork([],[],4,1,[[0.5,0.5,0.5,0.5]],0.005,0.0001,2.5,10000)
+                   
                 
         
         

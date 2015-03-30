@@ -1,0 +1,9 @@
+Inception,thriller,medium,eng,
+Frozen,children,short,eng,
+3 idiots,comedy,long,hindi,
+Omen,horror,medium,eng,
+The Wedding bride,romance,short,eng,
+Kung-Fu Panda,children,short,eng,
+Mission Impossible,action,medium,eng
+Troy,war,long,eng
+Excorcist,horror,medium,eng

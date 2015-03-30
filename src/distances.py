@@ -37,8 +37,13 @@ def pearson(user1,user2,d):
 		i=i+1
 	return (0.001+n1)/(0.001+math.sqrt(d1)*math.sqrt(d2))
 
-def calc(user1,user2,d,index):
-	return (((pearson(user1,user2,d))**2))*d[user2][index]
+def calc(user1,user2,ratings,index):
+    val=ratings[user2][index]
+    if val=='x':
+        return 0.00
+    return (((pearson(user1,user2,ratings))**2))*val
+     
+	 
     
 def euclid(user1,user2,d):
     i=0
