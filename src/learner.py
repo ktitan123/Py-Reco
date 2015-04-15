@@ -32,7 +32,7 @@ class ANN():
         for index in range(self.onodes):
             sum=0.0
             for x in range(self.inodes):
-                sum=sum+input[x]*self.weights[index][x]
+                sum=sum+float(input[x])*self.weights[index][x]
             
             result.append(sum)
         return result
@@ -42,7 +42,7 @@ class ANN():
         for x in range(self.onodes):
             eps=eps+math.sqrt((desired[x]-result[x])**2)
             for index in range(self.inodes):
-                error=self.lr*(desired[x]-result[x])*input[index]
+                error=self.lr*(desired[x]-result[x])*float(input[index])
                 self.weights[x][index]=self.weights[x][index]+error
         return eps   
         

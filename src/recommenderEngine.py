@@ -6,12 +6,54 @@ import similiarity as sim
 import item
 import operator
 
+def normalize(values):
+    maxval=[]
+    minval=[]
+    for index in range(len(values[0])):
+        maxv=0
+        minv=99999999
+        for p in range(len(values)):
+            maxv=max(maxv,float(values[p][index]))
+            minv=min(minv,float(values[p][index]))
+        maxval.append(maxv)
+        minval.append(minv)
+    for index in range(len(values)):
+        for p in range(len(values[0])):
+            x=(float(values[index][p])-minval[p])/(maxval[p]-minval[p]+0.0001)
+            values[index][p]=x
+    return values
 
-
-
+def train(trainfile):
+    f=open(trainfile,"r")
+    input=[]
+    output=[]
+    flag=0
+    weights=[[0.8,0.8,0.8,0.8]]
+    nn=learner.ANN(4,1,weights,0.005,0.0001,0.5,50000)
+    for line in f:
+        if flag==0:
+            flag=1
+            continue
+        val=line.split(",")
+        inp=val[0:4]
+        op=[]
+        op.append(float(val[4]))
+        input.append(inp)
+        nn.addoutput(op)
+    input=normalize(input)
+    for x in input:
+        nn.addinput(x)
+        
+    nn.learn()
+    return nn.weights
     
     
-def recommend(user,ratings,items,moviesrev,movies):
+    
+     
+        
+    
+    
+def recommend(user,ratings,items,moviesrev,movies,weights):
     candidates=[]
     i=0
     for i in range(len(ratings[user])):
@@ -36,9 +78,9 @@ def recommend(user,ratings,items,moviesrev,movies):
         #predicted reco value of the current candidate would be 
         #weighted sum of all similiarity values
         sum=0.0
-        weights=[1.0,1.0,1.0,1.0]
+        #weights=[1.0,1.0,1.0,1.0]
         for i in range(4):
-            sum = sum + weights[i]*metrics[i]
+            sum = sum + weights[0][i]*metrics[i]
         reco[candidate]=sum
     
     reco = sorted(reco.items(), key=operator.itemgetter(1),reverse=True)
@@ -58,9 +100,10 @@ def initialize(itemfile,ratingsfile):
     
 ratings,items,movies,moviesrev = initialize("itemlist.txt","ratings.txt")
 #print moviesrev[1]
-print recommend('peter',ratings,items,moviesrev,movies)
-    
-    
+
+weights = train("train.csv")   
+print weights
+print recommend('john',ratings,items,moviesrev,movies,weights)
     
     
     

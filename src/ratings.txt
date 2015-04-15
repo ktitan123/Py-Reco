@@ -1,12 +1,14 @@
+john,Excorcist,3.5
+john,Omen,4
 john,Inception,4.5
+john,Kung-Fu Panda,2.0
+john,Frozen,4.5
 akash,Frozen,3
 lisa,Frozen,4.5
 anand,Troy,3.5
+anand,Kung-Fu Panda,3.0
 anand,Mission Impossible,2
 lisa,Kung-Fu Panda,1.5
-john,Kung-Fu Panda,2.0
-john,Frozen,4.5
-anand,Kung-Fu Panda,3.0
 kelly,Inception,4.0
 kelly,Troy,5
 kelly,Omen,4.5
@@ -16,3 +18,9 @@ peter,Inception,4.0
 peter,Troy,4.5
 peter,Mission Impossible,4.5
 peter,Frozen,5
+sahil,Troy,3.5
+sahil,Kung-Fu Panda,3.0
+sahil,Mission Impossible,2
+sahil,Inception,4.5
+sahil,Frozen,2
+sahil,Excorcist,3.5
